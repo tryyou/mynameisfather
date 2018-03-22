@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../public/css/index.css">
+    <style>
+        .bigtitle {
+            text-algin: center;
+            font-size: 32px;
+            color: red;
+        }
+
+        #anim {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="anim"></canvas>
+    <h2 class="bigtitle"> 这个页面是服务端渲染的</h2>
+    <table>
+        <thead align="center">
+            <tr>
+                <th>姓名</th>
+                <th>账号</th>
+                <th>密码</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in allUser %}
+            <tr align="center">
+                <td>{{item.name}}</td>
+                <td>{{item.number}}</td>
+                <td>{{item.password}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+</body>
+<script>
+    window.onload = function () {
+        var c = document.getElementById("anim");
+        var w = window.innerWidth;
+        var h = window.innerHeight
+        c.width = w;
+        c.height = h;
+        var pen = c.getContext("2d");
+        pen.beginPath();
+        pen.fillStyle="royalblue";
+        pen.fillRect(0,0,w,h);//起始坐标 x y 宽  高
+        
+        
+
+        function drow(x,y,n){
+            pen.clearRect(x-n,y-n,x+2*n,2*n+y)
+        }
+        // drow(100,100,50)
+        
+        var r = 0;
+        function a(){
+            if(r<window.innerWidth/2){
+                r+=1;
+                drow(window.innerWidth/2,window.innerHeight/2,r);
+                window.requestAnimationFrame(a);
+            }
+        }
+        a()
+ 
+
+    }
+</script>
+
+</html>
